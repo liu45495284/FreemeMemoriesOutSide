@@ -1,7 +1,3 @@
 #google
-#cp=googleplay
-#td=googleplay
-
-#国内Droi市场
-cp=droi
-td=droi
+cp=googleplay
+td=googleplay

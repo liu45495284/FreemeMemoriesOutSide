@@ -19,9 +19,9 @@ android {
         applicationId "com.freeme.memories"
         minSdkVersion 17
         targetSdkVersion 22
-        manifestPlaceholders = META_NATIVE
+        //manifestPlaceholders = META_NATIVE
         //manifestPlaceholders = META_TEST
-        //manifestPlaceholders = MTTA_OVERSEA
+        manifestPlaceholders = MTTA_OVERSEA
         versionCode 1
         versionName "1.0.5_1"
     }
