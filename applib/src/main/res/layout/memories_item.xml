@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.freeme.memories.presenter.AlbumSetPresenter"/>
+
+        <import type="com.freeme.memories.data.bucket.MemoryBucket"/>
+
+        <variable
+            name="presenter"
+            type="AlbumSetPresenter"/>
+
+        <variable
+            name="bucket"
+            type="MemoryBucket"/>
+
+        <variable
+            name="position"
+            type="int"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/album_height"
+        app:cardCornerRadius="@dimen/global_margin_7dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="@{() -> presenter.onItemClick(context, position,bucket.bucketId)}">
+
+            <com.freeme.memories.ui.SquareImageView
+                android:id="@+id/item_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.2"
+                android:src="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/item_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@{bucket.description}"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:id="@+id/item_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@{bucket.summary}"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

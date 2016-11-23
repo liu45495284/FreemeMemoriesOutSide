@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">拾光相册</string>
+    <string name="memory_last_week_description">最近一周回忆</string>
+    <string name="memory_last_year_today_description">去年今天</string>
+    <string name="memory_last_month_description">过去三个月回忆</string>
+    <string name="memory_travel_description">旅行游记</string>
+    <string name="no_picture_text">暂无拍摄照片</string>
+</resources>

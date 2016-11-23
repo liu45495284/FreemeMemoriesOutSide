@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+def cfg = rootProject.ext.android
+def libs = rootProject.ext.dependencies
+
+def UPDATESELF_REQUEST_URL_NATIVE = "http://update-market.tt286.com:2520"
+def UPDATESELF_REQUEST_URL_OVERSEA = "http://update-osmarket.dd351.com:2520"
+def UPDATESELF_REQUEST_URL_TEST = "http://101.95.97.178:2520"
+
+def MTTA_OVERSEA = [UPDATESELF_UPDATEURL_VALUE: UPDATESELF_REQUEST_URL_OVERSEA]
+def META_NATIVE = [UPDATESELF_UPDATEURL_VALUE: UPDATESELF_REQUEST_URL_NATIVE]
+def META_TEST = [UPDATESELF_UPDATEURL_VALUE: UPDATESELF_REQUEST_URL_TEST]
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.freeme.memories"
+        minSdkVersion 17
+        targetSdkVersion 22
+        manifestPlaceholders = META_NATIVE
+        //manifestPlaceholders = META_TEST
+        //manifestPlaceholders = MTTA_OVERSEA
+        versionCode 1
+        versionName "1.0.5_1"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile project(':applib')
+    compile libs['appcompat-v7']
+    compile libs['recyclerview-v7']
+    compile libs['cardview-v7']
+    compile libs['greendao']
+    compile project(':gallerystore')
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.freeme.multimedia:freemeupdate:1.0.21@aar'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+}

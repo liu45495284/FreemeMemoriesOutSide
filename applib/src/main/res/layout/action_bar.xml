@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.freeme.memories.actionbar.entity.ActionBarConfig"/>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="config"
+            type="ActionBarConfig"/>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/action_bar_height"
+        android:background="@mipmap/background_actionbar_2"
+        android:alpha="0.87"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/global_10dp"
+            android:onClick="@{config.actionBarPresenter::onBack}"
+            android:scaleType="centerInside"
+            android:src="@mipmap/previous_page_arrow"
+            android:visibility="@{config.showHomeAsUp ? View.VISIBLE : View.GONE}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@{config.title}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/global_text_size_20sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/global_18dp"
+            android:onClick="@{config.actionBarPresenter::onRightAction}"
+            android:scaleType="centerInside"
+            android:visibility="@{config.showRightMenu ? View.VISIBLE : View.GONE}"
+            app:imageId="@{config.rightImageId}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/global_25dp"
+            android:onClick="@{config.actionBarPresenter::onRightAction}"
+            android:text="@{config.rightMenuText}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/global_text_size_20sp"
+            android:visibility="@{config.showRightMenu ? View.VISIBLE : View.GONE}"/>
+
+    </RelativeLayout>
+</layout>

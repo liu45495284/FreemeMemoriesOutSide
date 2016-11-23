@@ -1,0 +1,1 @@
+include ':gallerystore', ':MemoryApplication', 'applib'

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:actionbar="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.freeme.memories.data.bucket.MemoryBucket"/>
+
+        <import type="com.freeme.memories.presenter.AlbumPresenter"/>
+
+        <import type="com.freeme.memories.actionbar.entity.ActionBarConfig"/>
+
+        <variable
+            name="presenter"
+            type="AlbumPresenter"/>
+
+        <variable
+            name="bucket"
+            type="MemoryBucket"/>
+
+        <variable
+            name="actionbarConfig"
+            type="ActionBarConfig"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/action_bar"
+            actionbar:config="@{actionbarConfig}"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="6dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <com.freeme.memories.ui.RecyclerViewHeader
+                android:id="@+id/header"
+                android:layout_width="@dimen/album_header_witdth"
+                android:layout_height="@dimen/album_header_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="6dp"
+                android:background="@color/default_background"
+                android:onClick="@{presenter::onHeaderClick}">
+
+                <ImageView
+                    android:id="@+id/header_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop"/>
+
+                <VideoView
+                    android:id="@+id/header_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/img_video_play"/>
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/global_margin_20dp"
+                        android:text="@{bucket.description}"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"/>
+
+                    <TextView
+                        android:id="@+id/summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/global_margin_7dp"
+                        android:text="@{bucket.summary}"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+            </com.freeme.memories.ui.RecyclerViewHeader>
+
+        </FrameLayout>
+    </LinearLayout>
+</layout>
