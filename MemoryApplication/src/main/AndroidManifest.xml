@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <meta-data android:value="58342bc3a40fa360a60005eb" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="droi" android:name="UMENG_CHANNEL"/>
+        <meta-data android:value="googleplay" android:name="UMENG_CHANNEL"/>
 
         <service
             android:name="com.freeme.updateself.app.UpdateSelfService"

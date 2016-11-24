@@ -1,1 +1,1 @@
-include ':gallerystore', ':MemoryApplication', 'applib'
+include ':gallerystore', ':MemoryApplication', ':news', 'applib'
