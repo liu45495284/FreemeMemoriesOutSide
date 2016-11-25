@@ -6,7 +6,7 @@ import com.freeme.memories.base.AppImpl;
 import com.freeme.updateself.update.UpdateMonitor;
 
 /**
- * Created by server on 16-11-18.
+ * Created by Kathy on 16-11-18.
  */
 public class MemoryApp extends Application {
 
