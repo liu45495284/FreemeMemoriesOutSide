@@ -1,13 +1,13 @@
 package com.freeme.memories.activity;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-import com.freeme.memories.R;
 import com.freeme.memories.actionbar.entity.ActionBarConfig;
 import com.freeme.memories.adapter.AlbumSetAdapter;
 import com.freeme.memories.base.AppImpl;
@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotifier {
+
+    private static final String TAG = "AlbumSetActivity";
     public static final int MSG_MEMORY_ITEM = 100;
     public static final int MSG_MEMORY_ITEM_TYPE = 0x0101;
     public static final String TAG = "AlbumSetActivity";
@@ -37,6 +39,10 @@ public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotif
     private List<MemoryBucket> mMemoryList = new ArrayList<>();
     private long mDataVersion = -1;
 
+    String bannerPosition = "#1";
+    LinearLayout rl;
+    AdControlBanner banner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,8 @@ public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotif
         mActivityAlbumSetBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_album_set);
         initBinding();
+      //  rl = (LinearLayout) findViewById(R.id.album_set_layout);
+        createBannerAd();
     }
 
     @Override
@@ -67,6 +75,10 @@ public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotif
         if (AppImpl.isShowEmpty && mMemoryList.size() == 0) {
             mActivityAlbumSetBinding.emptyView.setVisibility(View.VISIBLE);
         }
+
+        if(banner != null){
+            banner.resume();
+        }
     }
 
     @Override
@@ -75,6 +87,19 @@ public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotif
         MobclickAgent.onPause(this);
         LogUtil.d(TAG, "Kathy - AlbumSetActivity - onPause");
         MemoriesManager.getInstance().unRegisterChangeNotifier(this);
+
+        if(banner != null){
+            banner.pause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(banner != null){
+            banner.destroy();
+            banner = null;
+        }
     }
 
     @Override
@@ -139,5 +164,26 @@ public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotif
     public void notifyContentChanged(int type) {
         LogUtil.d(TAG, "Kathy - AlbumSetActivity - notifyContentChanged");
         updateContent();
+    }
+
+    private void createBannerAd(){
+        banner = new AdControlBanner(this,bannerPosition);
+        banner.setListener(new BannerListener() {
+            @Override
+            public void onAdLoaded() {
+                Log.d(TAG,"onAdLoaded");
+            }
+
+            @Override
+            public void onAdFailed() {
+                Log.d(TAG,"onAdFailed");
+            }
+
+            @Override
+            public void onAdClicked() {
+                Log.d(TAG,"onAdClicked");
+            }
+        });
+        rl.addView(banner,new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 }
