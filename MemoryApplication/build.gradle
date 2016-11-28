@@ -33,8 +33,13 @@ android {
     }
 
     dataBinding {
-        enabled true
+        enabled = true
     }
+}
+
+
+repositories {
+    jcenter()
 
     repositories {
         flatDir {
@@ -42,6 +47,7 @@ android {
         }
     }
 }
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -56,9 +62,4 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.freeme.multimedia:freemeupdate:1.0.21@aar'
     compile 'com.umeng.analytics:analytics:latest.integration'
-
-    /*Add for DroiAD*/
-    compile(name: 'adcontrol', ext: 'aar')
-    compile(name: 'AudienceNetwork', ext: 'aar')
-    compile 'com.google.android.gms:play-services-ads:+'
 }
