@@ -19,6 +19,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
     dataBinding {
         enabled true
     }
@@ -36,4 +43,8 @@ dependencies {
     provided files('libs/universal-image-loader-1.9.4.jar')
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.freeme.multimedia:freemeupdate:1.0.21@aar'
+
+    compile(name: 'adcontrol', ext: 'aar')
+    compile(name: 'AudienceNetwork', ext: 'aar')
+    compile 'com.google.android.gms:play-services-ads:+'
 }

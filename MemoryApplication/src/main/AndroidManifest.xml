@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name="com.freeme.memory.MemoryApp"
@@ -16,16 +18,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.freeme.memories.activity.AlbumSetActivity"
-                  android:screenOrientation="portrait"  >
+        <activity
+            android:name="com.freeme.memories.activity.AlbumSetActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <meta-data android:value="58342bc3a40fa360a60005eb" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="googleplay" android:name="UMENG_CHANNEL"/>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="58342bc3a40fa360a60005eb"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="droi"/>
 
         <service
             android:name="com.freeme.updateself.app.UpdateSelfService"
@@ -43,6 +51,55 @@
                 android:value="${UPDATESELF_UPDATEURL_VALUE}"
                 tools:replace="android:value"/>
         </service>
+
+        <!-- Include the AdActivity configChanges and theme. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
+        <!-- add for facebook start -->
+        <activity
+            android:name="com.facebook.ads.InterstitialAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.facebook.ads.AudienceNetworkActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <!-- add for facebook end -->
+
+        <!-- <activity android:name="com.droi.addemo.InterStitialActivity"></activity>-->
+
+        <!--appid & channel 不可缺少，请联系Droi运营获取相关参数 本应用中填入的为测试参数-->
+        <meta-data
+            android:name="DROI_APPID"
+            android:value="demo0000001"/>
+        <meta-data
+            android:name="DROI_CHANNEL"
+            android:value="droi"/>
+
+        <!--以下参数为选配，如果需要请联系Droi运营获取相关参数，本应用中填入的为测试参数 -->
+        <meta-data
+            android:name="DROI_CUSTOMER"
+            android:value="test_customer"/>
+        <meta-data
+            android:name="DROI_BRANDS"
+            android:value="test_brands"/>
+        <meta-data
+            android:name="DROI_PROJECT"
+            android:value="test_project"/>
+        <meta-data
+            android:name="DROI_CPU"
+            android:value="test_cpu"/>
+        <meta-data
+            android:name="DROI_OSVERSION"
+            android:value="test_version"/>
+
+
+        <!-- for admob config end -->
     </application>
 
 </manifest>
