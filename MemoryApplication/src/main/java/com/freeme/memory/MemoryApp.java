@@ -27,6 +27,7 @@ public class MemoryApp extends Application {
                 //*/ default notify small icon, ifnot set use updateself_ic_notify_small
 //                .setDefaultNotifyIcon(R.drawable.updateself_ic_notify_small)
                 .complete();
+
         try {
             Log.d(TAG,"application oncreate");
             AdControl.Init(this)

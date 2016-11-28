@@ -10,13 +10,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.droi.adcontrol.banner.AdControlBanner;
+import com.droi.adcontrol.banner.BannerListener;
 import com.freeme.memories.actionbar.entity.ActionBarConfig;
 import com.freeme.memories.actionbar.presenter.ActionBarPresenter;
 import com.freeme.memories.R;
@@ -44,6 +51,7 @@ import java.util.List;
 
 public class AlbumActivity extends BaseActivity implements IMemoriesDataNotifier {
 
+    public static final String TAG = "AlbumActivity";
     public static final int MSG_HEADER = 100;
     public static final int MSG_IMAGE_ITEM = 101;
 
@@ -64,6 +72,9 @@ public class AlbumActivity extends BaseActivity implements IMemoriesDataNotifier
     private boolean isInitData = false;
     private int mScreeneWidth = 700 ;
 
+    private String bannerPosition = "banner_02";
+    private AdControlBanner banner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +83,31 @@ public class AlbumActivity extends BaseActivity implements IMemoriesDataNotifier
         initSlideShowInfo();
         initSlidePreview(savedInstanceState);
         initBinding();
+        createBannerAd();
     }
+
+    private void createBannerAd(){
+        banner = new AdControlBanner(this,bannerPosition);
+        banner.setListener(new BannerListener() {
+            @Override
+            public void onAdLoaded() {
+                Log.d(TAG,"onAdLoaded");
+            }
+
+            @Override
+            public void onAdFailed() {
+                Log.d(TAG,"onAdFailed");
+            }
+
+            @Override
+            public void onAdClicked() {
+                Log.d(TAG,"onAdClicked");
+            }
+        });
+
+        mActivityAlbumBinding.adContainer.addView(banner,new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+    }
+
 
 
     private void initSlideShowInfo() {
@@ -166,6 +201,9 @@ public class AlbumActivity extends BaseActivity implements IMemoriesDataNotifier
 
     @Override
     protected void onResume() {
+        if(banner != null){
+            banner.resume();
+        }
         super.onResume();
         MobclickAgent.onResume(this);
         MemoriesManager.getInstance().registerChangeNotifier(this);
@@ -177,6 +215,9 @@ public class AlbumActivity extends BaseActivity implements IMemoriesDataNotifier
 
     @Override
     protected void onPause() {
+        if(banner != null){
+            banner.pause();
+        }
         super.onPause();
         MobclickAgent.onPause(this);
         MemoriesManager.getInstance().unRegisterChangeNotifier(this);
@@ -188,6 +229,15 @@ public class AlbumActivity extends BaseActivity implements IMemoriesDataNotifier
         super.onStop();
         // prevent slideshow from operating when in background
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(banner != null){
+            banner.destroy();
+            banner = null;
+        }
+        super.onDestroy();
     }
 
     @Override

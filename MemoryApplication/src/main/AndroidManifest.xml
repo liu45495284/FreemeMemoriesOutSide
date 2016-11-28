@@ -67,6 +67,9 @@
             android:name="com.facebook.ads.InterstitialAdActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
+
+
+
             android:name="com.facebook.ads.AudienceNetworkActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <!-- add for facebook end -->
@@ -76,10 +79,10 @@
         <!--appid & channel 不可缺少，请联系Droi运营获取相关参数 本应用中填入的为测试参数-->
         <meta-data
             android:name="DROI_APPID"
-            android:value="demo0000001"/>
+            android:value="sgxc_01"/>
         <meta-data
             android:name="DROI_CHANNEL"
-            android:value="droi"/>
+            android:value="memory"/>
 
         <!--以下参数为选配，如果需要请联系Droi运营获取相关参数，本应用中填入的为测试参数 -->
         <meta-data

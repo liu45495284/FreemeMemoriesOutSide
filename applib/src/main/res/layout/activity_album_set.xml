@@ -20,9 +20,14 @@
             layout="@layout/action_bar"
             actionbar:config="@{actionbarconfig}"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:id="@+id/adContainer"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
-            android:layout_marginTop="@dimen/global_margin_6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

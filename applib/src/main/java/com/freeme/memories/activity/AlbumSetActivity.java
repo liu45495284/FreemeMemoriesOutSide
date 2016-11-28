@@ -5,8 +5,13 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import com.droi.adcontrol.banner.AdControlBanner;
+import com.droi.adcontrol.banner.BannerListener;
 import com.freeme.memories.R;
 import com.freeme.memories.actionbar.entity.ActionBarConfig;
 import com.freeme.memories.adapter.AlbumSetAdapter;
@@ -37,6 +42,9 @@ public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotif
     private List<MemoryBucket> mMemoryList = new ArrayList<>();
     private long mDataVersion = -1;
 
+    private String bannerPosition = "banner_01";
+    private AdControlBanner banner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +52,30 @@ public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotif
         mActivityAlbumSetBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_album_set);
         initBinding();
+        createBannerAd();
+    }
+
+    private void createBannerAd() {
+        banner = new AdControlBanner(this, bannerPosition);
+        banner.setListener(new BannerListener() {
+            @Override
+            public void onAdLoaded() {
+                Log.d(TAG, "onAdLoaded");
+            }
+
+            @Override
+            public void onAdFailed() {
+                Log.d(TAG, "onAdFailed");
+            }
+
+            @Override
+            public void onAdClicked() {
+                Log.d(TAG, "onAdClicked");
+            }
+        });
+        mActivityAlbumSetBinding
+                .adContainer.addView(banner, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams
+                .WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     @Override
@@ -55,6 +87,9 @@ public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotif
 
     @Override
     protected void onResume() {
+        if (banner != null) {
+            banner.resume();
+        }
         super.onResume();
         MobclickAgent.onResume(this);
         LogUtil.d(TAG, "Kathy - AlbumSetActivity - onResume - AppImpl.isShowEmpty = " + AppImpl
@@ -71,10 +106,22 @@ public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotif
 
     @Override
     protected void onPause() {
+        if (banner != null) {
+            banner.pause();
+        }
         super.onPause();
         MobclickAgent.onPause(this);
         LogUtil.d(TAG, "Kathy - AlbumSetActivity - onPause");
         MemoriesManager.getInstance().unRegisterChangeNotifier(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (banner != null) {
+            banner.destroy();
+            banner = null;
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -124,7 +171,8 @@ public class AlbumSetActivity extends BaseActivity implements IMemoriesDataNotif
             mActivityAlbumSetBinding.emptyView.setVisibility(View.VISIBLE);
             AppImpl.isShowEmpty = true;
         }
-        LogUtil.d(TAG, "Kathy - AlbumSetActivity - updateContent - isShowEmpty = " + AppImpl.isShowEmpty);
+        LogUtil.d(TAG, "Kathy - AlbumSetActivity - updateContent - isShowEmpty = " + AppImpl
+                .isShowEmpty);
 
         mMemoryList.addAll(list);
         updateDataVersion();
