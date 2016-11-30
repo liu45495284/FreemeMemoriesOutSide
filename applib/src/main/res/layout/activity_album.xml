@@ -36,7 +36,6 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/adContainer"
             android:layout_margin="6dp">
 
             <android.support.v7.widget.RecyclerView
@@ -99,6 +98,12 @@
                 </LinearLayout>
 
             </com.freeme.memories.ui.RecyclerViewHeader>
+
+            <RelativeLayout
+                android:id="@+id/ad2Container"
+                android:layout_gravity="bottom|center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </FrameLayout>
     </LinearLayout>

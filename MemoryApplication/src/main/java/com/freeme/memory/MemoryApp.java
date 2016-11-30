@@ -32,7 +32,7 @@ public class MemoryApp extends Application {
             Log.d(TAG,"application oncreate");
             AdControl.Init(this)
                     .sync();
-            AdControl.setDebugMode(true);
+           // AdControl.setDebugMode(true);
         } catch (Exception e) {
             e.printStackTrace();
             Log.d(TAG,"sdk init error");

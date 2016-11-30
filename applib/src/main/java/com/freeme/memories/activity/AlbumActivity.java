@@ -13,8 +13,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 
@@ -24,9 +22,9 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.droi.adcontrol.banner.AdControlBanner;
 import com.droi.adcontrol.banner.BannerListener;
+import com.freeme.memories.R;
 import com.freeme.memories.actionbar.entity.ActionBarConfig;
 import com.freeme.memories.actionbar.presenter.ActionBarPresenter;
-import com.freeme.memories.R;
 import com.freeme.memories.adapter.AlbumAdapter;
 import com.freeme.memories.base.AppImpl;
 import com.freeme.memories.base.BaseActivity;
@@ -105,7 +103,7 @@ public class AlbumActivity extends BaseActivity implements IMemoriesDataNotifier
             }
         });
 
-        mActivityAlbumBinding.adContainer.addView(banner,new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+        mActivityAlbumBinding.ad2Container.addView(banner,new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
 

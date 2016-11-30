@@ -84,24 +84,6 @@
             android:name="DROI_CHANNEL"
             android:value="memory"/>
 
-        <!--以下参数为选配，如果需要请联系Droi运营获取相关参数，本应用中填入的为测试参数 -->
-        <meta-data
-            android:name="DROI_CUSTOMER"
-            android:value="test_customer"/>
-        <meta-data
-            android:name="DROI_BRANDS"
-            android:value="test_brands"/>
-        <meta-data
-            android:name="DROI_PROJECT"
-            android:value="test_project"/>
-        <meta-data
-            android:name="DROI_CPU"
-            android:value="test_cpu"/>
-        <meta-data
-            android:name="DROI_OSVERSION"
-            android:value="test_version"/>
-
-
         <!-- for admob config end -->
     </application>
 
