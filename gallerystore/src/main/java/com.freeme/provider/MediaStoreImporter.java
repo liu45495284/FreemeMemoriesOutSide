@@ -32,6 +32,7 @@ public class MediaStoreImporter {
 
     private static GalleryFilesDao galleryFilesDao = null;
     private ContentResolver mResolver;
+    private Context mContext;
 
     public static MediaStoreImporter getInstance() {
         return Singleton.instance;
@@ -39,6 +40,7 @@ public class MediaStoreImporter {
 
     public void doImport(final Context context) {
         mResolver = context.getContentResolver();
+        mContext = context;
         galleryFilesDao = GalleryDBManager.getInstance().getGalleryFilesDao();
 
         final HandlerThread handlerThread = new HandlerThread(TAG);
@@ -302,7 +304,8 @@ public class MediaStoreImporter {
                     List<Long> mediastoreIds = new ArrayList<>();
 
                     String where1 = "(media_type =" + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
-                            + " OR " + "media_type =" + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
+                            + " OR " + "media_type =" + MediaStore.Files.FileColumns
+                            .MEDIA_TYPE_VIDEO
                             + ")";
                     Cursor cursor1 = mResolver.query(
                             MediaStore.Files.getContentUri("external"),

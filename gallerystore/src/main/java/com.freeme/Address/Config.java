@@ -8,7 +8,9 @@ package com.freeme.Address;
 public class Config {
 
     public static final String GOOGLE_MAP_API =
-            "http://maps.google.cn/maps/api/geocode/json?language=zh-CN&latlng=%1$s," + "%2$s";
+            "http://maps.google.cn/maps/api/geocode/json?language=en&latlng=%1$s," + "%2$s";
+   /* public static final String GOOGLE_MAP_API_CHINA =
+            "http://maps.google.cn/maps/api/geocode/json?language=zh-CN&latlng=%1$s," + "%2$s";*/
 /*    public static final String GOOGLE_MAP_API =
             "http://maps.google.cn/maps/api/geocode/json?language=th&latlng=%1$s," + "%2$s";*/
     public final static int CONNECT_TIMEOUT = 20000;
