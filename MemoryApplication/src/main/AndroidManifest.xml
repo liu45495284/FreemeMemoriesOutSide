@@ -33,7 +33,7 @@
             android:value="58342bc3a40fa360a60005eb"/>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="droi"/>
+            android:value="googleplay"/>
 
         <service
             android:name="com.freeme.updateself.app.UpdateSelfService"

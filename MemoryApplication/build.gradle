@@ -23,7 +23,7 @@ android {
         //manifestPlaceholders = META_TEST
         manifestPlaceholders = MTTA_OVERSEA
         versionCode 1
-        versionName "1.0.6_1"
+        versionName "1.0.7_1"
     }
     buildTypes {
         release {
