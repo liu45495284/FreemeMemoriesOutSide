@@ -19,20 +19,22 @@ public class MemoriesLoader implements ThreadPool.Job<ArrayList<LocalImage>> {
     private ContentResolver mContentResolver;
     private int mLoadType;
     private AddressObject mAddressObject;
+    private int mDateTaken;
 
     public MemoriesLoader(ContentResolver resolver) {
         mContentResolver = resolver;
     }
 
-    public MemoriesLoader(ContentResolver resolver, int type, AddressObject addressObject) {
+    public MemoriesLoader(ContentResolver resolver, int type, AddressObject addressObject, int dateTaken) {
         mContentResolver = resolver;
         mLoadType = type;
         mAddressObject = addressObject;
+        mDateTaken = dateTaken;
     }
 
     @Override
     public ArrayList<LocalImage> run(ThreadPool.JobContext jc) {
         LogUtil.i("MemoriesLoader running...");
-        return LocalImageHelper.loadImageFromFilesTable(jc, mContentResolver, mLoadType, mAddressObject);
+        return LocalImageHelper.loadImageFromFilesTable(jc, mContentResolver, mLoadType, mAddressObject, mDateTaken);
     }
 }

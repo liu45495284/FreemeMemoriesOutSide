@@ -3,5 +3,6 @@
     <string name="memory_last_year_today_description">Last year today</string>
     <string name="memory_last_month_description">Memories of past three months</string>
     <string name="memory_travel_description">Travel</string>
+    <string name="diary">Diary</string>
     <string name="no_picture_text">No photos</string>
 </resources>

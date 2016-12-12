@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.freeme.memories.R;
@@ -67,7 +68,7 @@ public class MemoriesManager implements IContentDataNotifier {
 
     public void loadMemories() {
         mMemoryBucketList.clear();
-        int[] random = AppUtil.noRepeatRandom(4);
+        int[] random = AppUtil.noRepeatRandom(5);
         for (int index : random) {
             LogUtil.i("index = " + index);
             loadMemory(index);
@@ -91,6 +92,10 @@ public class MemoriesManager implements IContentDataNotifier {
             case Global.MEMORIES_TYPE_LOCATION:
                 loadLocationMemory();
                 break;
+
+            case Global.MEMORIES_TYPE_DATE:
+                loadDateMemory();
+                break;
         }
     }
 
@@ -107,7 +112,7 @@ public class MemoriesManager implements IContentDataNotifier {
 
         MemoryBucketManager bucketManager =
                 new MemoryBucketManager(mIMemoriesApp, lastweek, Global.MEMORIES_TYPE_LAST_WEEK,
-                        null);
+                        null, 0);
         bucketManager.loadImages();
 
     }
@@ -122,7 +127,7 @@ public class MemoriesManager implements IContentDataNotifier {
                 .build();
 
         MemoryBucketManager bucketManager = new MemoryBucketManager(mIMemoriesApp, lastYearToday,
-                Global.MEMORIES_TYPE_LAST_YEAR_TODAY, null);
+                Global.MEMORIES_TYPE_LAST_YEAR_TODAY, null, 0);
         bucketManager.loadImages();
 
     }
@@ -140,7 +145,57 @@ public class MemoriesManager implements IContentDataNotifier {
 
         MemoryBucketManager bucketManager =
                 new MemoryBucketManager(mIMemoriesApp, lastweek, Global.MEMORIES_TYPE_LAST_MONTH,
-                        null);
+                        null, 0);
+        bucketManager.loadImages();
+    }
+
+    private void loadDateMemory() {
+        LogUtil.d(TAG, "Kathy - loadDateMemory");
+        final HandlerThread handlerThread = new HandlerThread(TAG);
+        handlerThread.start();
+        Handler mHandler = new Handler(handlerThread.getLooper());
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                String where = "cameradate > 0)"
+                        + " group by cameradate having count(cameradate) > 10"
+                        + " and ( datetaken > 0";
+                Cursor cursor = mResolver.query(
+                        GalleryStore.Files.getContentUri("external"),
+                        new String[]{GalleryStore.Images.ImageColumns.DATE_TAKEN
+                                + "," + "datetaken/24/60/60 as cameradate "}, where, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    for (int index = 0; index < cursor.getCount(); index++) {
+                        int intDateTaken = cursor.getInt(cursor.getColumnIndex(GalleryStore
+                                .Images.ImageColumns.DATE_TAKEN));
+                        doAddDateTypeBucket(intDateTaken);
+                        cursor.moveToNext();
+                    }
+                    cursor.close();
+                }
+                handlerThread.quit();
+            }
+        });
+    }
+
+    private void doAddDateTypeBucket(int intDateTaken) {
+        LogUtil.d(TAG, "Kathy - doAddDateTypeBucket - datetaken = " + intDateTaken);
+
+        long longDateTaken = (long)(intDateTaken) * 1000;
+        String strDate = null;
+        if (longDateTaken != 0) {
+            strDate = DateFormat.format("yyyy-MM-dd", longDateTaken).toString();
+        }
+
+        MemoryBucket location = new MemoryBucket.Builder()
+                .setDescription(mRes.getString(R.string.diary) + " • " + strDate )
+                .setMemoryType(Global.MEMORIES_TYPE_DATE)
+                .build();
+        LogUtil.d(TAG, "Kathy - doAddDateTypeBucket - strDate = " + strDate);
+
+        MemoryBucketManager bucketManager =
+                new MemoryBucketManager(mIMemoriesApp, location, Global.MEMORIES_TYPE_DATE,
+                        null, intDateTaken);
         bucketManager.loadImages();
     }
 
@@ -181,7 +236,6 @@ public class MemoriesManager implements IContentDataNotifier {
     }
 
 
-
     private void doAddMemoryBucket(AddressObject addressObject) {
         LogUtil.d(TAG, "Kathy - doAddMemoryBucket - addressObject = " + addressObject.toString());
         MemoryBucket location = new MemoryBucket.Builder()
@@ -192,7 +246,7 @@ public class MemoriesManager implements IContentDataNotifier {
 
         MemoryBucketManager bucketManager =
                 new MemoryBucketManager(mIMemoriesApp, location, Global.MEMORIES_TYPE_LOCATION,
-                        addressObject);
+                        addressObject, 0);
         bucketManager.loadImages();
     }
 

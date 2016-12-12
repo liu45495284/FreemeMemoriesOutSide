@@ -4,5 +4,6 @@
     <string name="memory_last_year_today_description">去年今天</string>
     <string name="memory_last_month_description">過去三個月回憶</string>
     <string name="memory_travel_description">旅行遊記</string>
+    <string name="diary">日記</string>
     <string name="no_picture_text">暫無拍攝照片</string>
 </resources>

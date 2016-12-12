@@ -27,19 +27,22 @@ public class MemoryBucketManager extends BaseMemoriesManager
     private MemoryBucket mMemoryBucket;
     private int mMemoryType;
     private AddressObject mAddressObject;
+    private int mDateTaken;
 
-    public MemoryBucketManager(IMemoriesApp app, MemoryBucket bucket, int type, AddressObject addressObject) {
+    public MemoryBucketManager(IMemoriesApp app, MemoryBucket bucket, int type, AddressObject
+            addressObject, int dateTaken) {
         mApp = app;
         mMemoryBucket = bucket;
         mMemoryType = type;
         mHandler = new Handler(app.getMainLooper());
         mAddressObject = addressObject;
+        mDateTaken = dateTaken;
     }
 
     public void loadImages() {
         cancelLoadTask();
         mLoadTask = mApp.getThreadPool().submit(
-                new MemoriesLoader(mApp.getContentResolver(), mMemoryType, mAddressObject), this);
+                new MemoriesLoader(mApp.getContentResolver(), mMemoryType, mAddressObject, mDateTaken), this);
     }
 
     private void cancelLoadTask() {

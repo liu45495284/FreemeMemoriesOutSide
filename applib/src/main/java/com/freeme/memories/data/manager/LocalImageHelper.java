@@ -93,7 +93,8 @@ public class LocalImageHelper {
                     + ">" + 1024 * 200 + ")";
 
     public static ArrayList<LocalImage> loadImageFromFilesTable(
-            JobContext jc, ContentResolver resolver, int type, AddressObject addressObject) {
+            JobContext jc, ContentResolver resolver, int type, AddressObject addressObject, int
+            dateTaken) {
 
         String where = null;
         switch (type) {
@@ -134,8 +135,19 @@ public class LocalImageHelper {
 
                 if (null != addressObject) {
                     where = ImageColumns.LATITUDE + " > 0 AND " + ImageColumns.LONGITUDE + "> 0 "
-                            + "AND " + ImageColumns.COUNTRY + " = " + "'" + addressObject.getCountry() + "'" +
-                            " AND " + ImageColumns.CITY + " = " + "'" +addressObject.getCity()+ "'";
+                            + "AND " + ImageColumns.COUNTRY + " = " + "'" + addressObject
+                            .getCountry() + "'" +
+                            " AND " + ImageColumns.CITY + " = " + "'" + addressObject.getCity() +
+                            "'";
+                }
+
+                LogUtil.i("MEMORIES_TYPE_LOCATION where = " + where);
+                break;
+
+            case Global.MEMORIES_TYPE_DATE:
+                LogUtil.i("type MEMORIES_TYPE_DATE");
+                if (dateTaken >0) {
+                    where = ImageColumns.DATE_TAKEN + "/24/60/60 = " + dateTaken/24/60/60;
                 }
                 LogUtil.i("MEMORIES_TYPE_LOCATION where = " + where);
                 break;

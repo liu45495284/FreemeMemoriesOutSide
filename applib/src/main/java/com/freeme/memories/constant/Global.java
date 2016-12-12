@@ -13,6 +13,7 @@ public class Global {
     public static final int MEMORIES_TYPE_LAST_YEAR_TODAY = 1;
     public static final int MEMORIES_TYPE_LAST_MONTH = 2;
     public static final int MEMORIES_TYPE_LOCATION = 3;
+    public static final int MEMORIES_TYPE_DATE = 4;
 
     public static final String FILE_PREX = "file://";
 
