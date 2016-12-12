@@ -408,15 +408,17 @@ public class MediaStoreImporter {
     }
 
     private void doUpdate(AddressObject addressObject) {
-        LogUtil.d(TAG, "Kathy - doUpdate = " + addressObject.getId());
-        //将对应id获取到的地址信息存入gallery.db
-        ContentValues updateValues = new ContentValues();
-        updateValues.put(GalleryStore.Images.ImageColumns.COUNTRY, addressObject.getCountry());
-        updateValues.put(GalleryStore.Images.ImageColumns.CITY, addressObject.getCity());
-        String where = "( " + MediaStore.Files.FileColumns._ID + " = " + addressObject.getId()
-                + ")";
-        mResolver.update(GalleryStore.Files.getContentUri
-                ("external"), updateValues, where, null);
+        if (null != addressObject) {
+            LogUtil.d(TAG, "Kathy - doUpdate = " + addressObject.getId());
+            //将对应id获取到的地址信息存入gallery.db
+            ContentValues updateValues = new ContentValues();
+            updateValues.put(GalleryStore.Images.ImageColumns.COUNTRY, addressObject.getCountry());
+            updateValues.put(GalleryStore.Images.ImageColumns.CITY, addressObject.getCity());
+            String where = "( " + MediaStore.Files.FileColumns._ID + " = " + addressObject.getId()
+                    + ")";
+            mResolver.update(GalleryStore.Files.getContentUri
+                    ("external"), updateValues, where, null);
+        }
     }
 
     private void analyzeAddress(final Long id, Double latitude, Double longtitude) {
@@ -461,9 +463,15 @@ public class MediaStoreImporter {
         String country;
         String city;
 
-        if (addressList.size() > 3) {
+        if (addressList.size() >= 3) {
             country = addressList.get(1);
             city = addressList.get(2);
+        } else if (addressList.size() >= 2){
+            country = addressList.get(0);
+            city = addressList.get(1);
+        } else if (addressList.size() >= 1){
+            country = addressList.get(0);
+            city = addressList.get(0);
         } else {
             return null;
         }
